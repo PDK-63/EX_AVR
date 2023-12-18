@@ -1,0 +1,388 @@
+
+ADC.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000025e  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         0000000c  00800060  0000025e  000002d2  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  000002de  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000310  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000060  00000000  00000000  0000034c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000cc8  00000000  00000000  000003ac  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000739  00000000  00000000  00001074  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   0000048e  00000000  00000000  000017ad  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  000000cc  00000000  00000000  00001c3c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000474  00000000  00000000  00001d08  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    000005a4  00000000  00000000  0000217c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000050  00000000  00000000  00002720  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   8:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  10:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  14:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  18:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  1c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  20:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  24:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  28:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  2c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  30:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  34:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  38:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  3c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  40:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  44:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  48:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  4c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  50:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d4 e0       	ldi	r29, 0x04	; 4
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	10 e0       	ldi	r17, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	ee e5       	ldi	r30, 0x5E	; 94
+  68:	f2 e0       	ldi	r31, 0x02	; 2
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+  70:	ac 36       	cpi	r26, 0x6C	; 108
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
+  76:	0e 94 d4 00 	call	0x1a8	; 0x1a8 <main>
+  7a:	0c 94 2d 01 	jmp	0x25a	; 0x25a <_exit>
+
+0000007e <__bad_interrupt>:
+  7e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000082 <_Z11LCD_Commandh>:
+
+void LCD_Clear()
+{
+	LCD_Command (0x01);		/* Clear display */
+	_delay_ms(2);
+	LCD_Command (0x80);		/* Cursor at home position */
+  82:	98 b3       	in	r25, 0x18	; 24
+  84:	9f 70       	andi	r25, 0x0F	; 15
+  86:	28 2f       	mov	r18, r24
+  88:	20 7f       	andi	r18, 0xF0	; 240
+  8a:	92 2b       	or	r25, r18
+  8c:	98 bb       	out	0x18, r25	; 24
+  8e:	c0 98       	cbi	0x18, 0	; 24
+  90:	c1 9a       	sbi	0x18, 1	; 24
+  92:	32 e0       	ldi	r19, 0x02	; 2
+  94:	3a 95       	dec	r19
+  96:	f1 f7       	brne	.-4      	; 0x94 <_Z11LCD_Commandh+0x12>
+  98:	00 c0       	rjmp	.+0      	; 0x9a <_Z11LCD_Commandh+0x18>
+  9a:	c1 98       	cbi	0x18, 1	; 24
+  9c:	ef e8       	ldi	r30, 0x8F	; 143
+  9e:	f1 e0       	ldi	r31, 0x01	; 1
+  a0:	31 97       	sbiw	r30, 0x01	; 1
+  a2:	f1 f7       	brne	.-4      	; 0xa0 <_Z11LCD_Commandh+0x1e>
+  a4:	00 c0       	rjmp	.+0      	; 0xa6 <_Z11LCD_Commandh+0x24>
+  a6:	00 00       	nop
+  a8:	28 b3       	in	r18, 0x18	; 24
+  aa:	2f 70       	andi	r18, 0x0F	; 15
+  ac:	f0 e1       	ldi	r31, 0x10	; 16
+  ae:	8f 9f       	mul	r24, r31
+  b0:	c0 01       	movw	r24, r0
+  b2:	11 24       	eor	r1, r1
+  b4:	82 2b       	or	r24, r18
+  b6:	88 bb       	out	0x18, r24	; 24
+  b8:	c1 9a       	sbi	0x18, 1	; 24
+  ba:	32 e0       	ldi	r19, 0x02	; 2
+  bc:	3a 95       	dec	r19
+  be:	f1 f7       	brne	.-4      	; 0xbc <_Z11LCD_Commandh+0x3a>
+  c0:	00 c0       	rjmp	.+0      	; 0xc2 <_Z11LCD_Commandh+0x40>
+  c2:	c1 98       	cbi	0x18, 1	; 24
+  c4:	8f e9       	ldi	r24, 0x9F	; 159
+  c6:	9f e0       	ldi	r25, 0x0F	; 15
+  c8:	01 97       	sbiw	r24, 0x01	; 1
+  ca:	f1 f7       	brne	.-4      	; 0xc8 <_Z11LCD_Commandh+0x46>
+  cc:	00 c0       	rjmp	.+0      	; 0xce <_Z11LCD_Commandh+0x4c>
+  ce:	00 00       	nop
+  d0:	08 95       	ret
+
+000000d2 <_Z8LCD_Initv>:
+  d2:	8f ef       	ldi	r24, 0xFF	; 255
+  d4:	87 bb       	out	0x17, r24	; 23
+  d6:	8f e3       	ldi	r24, 0x3F	; 63
+  d8:	9c e9       	ldi	r25, 0x9C	; 156
+  da:	01 97       	sbiw	r24, 0x01	; 1
+  dc:	f1 f7       	brne	.-4      	; 0xda <_Z8LCD_Initv+0x8>
+  de:	00 c0       	rjmp	.+0      	; 0xe0 <_Z8LCD_Initv+0xe>
+  e0:	00 00       	nop
+  e2:	83 e3       	ldi	r24, 0x33	; 51
+  e4:	0e 94 41 00 	call	0x82	; 0x82 <_Z11LCD_Commandh>
+  e8:	82 e3       	ldi	r24, 0x32	; 50
+  ea:	0e 94 41 00 	call	0x82	; 0x82 <_Z11LCD_Commandh>
+  ee:	88 e2       	ldi	r24, 0x28	; 40
+  f0:	0e 94 41 00 	call	0x82	; 0x82 <_Z11LCD_Commandh>
+  f4:	8c e0       	ldi	r24, 0x0C	; 12
+  f6:	0e 94 41 00 	call	0x82	; 0x82 <_Z11LCD_Commandh>
+  fa:	86 e0       	ldi	r24, 0x06	; 6
+  fc:	0e 94 41 00 	call	0x82	; 0x82 <_Z11LCD_Commandh>
+ 100:	81 e0       	ldi	r24, 0x01	; 1
+ 102:	0e 94 41 00 	call	0x82	; 0x82 <_Z11LCD_Commandh>
+ 106:	08 95       	ret
+
+00000108 <_Z8LCD_Charh>:
+ 108:	98 b3       	in	r25, 0x18	; 24
+ 10a:	9f 70       	andi	r25, 0x0F	; 15
+ 10c:	28 2f       	mov	r18, r24
+ 10e:	20 7f       	andi	r18, 0xF0	; 240
+ 110:	92 2b       	or	r25, r18
+ 112:	98 bb       	out	0x18, r25	; 24
+ 114:	c0 9a       	sbi	0x18, 0	; 24
+ 116:	c1 9a       	sbi	0x18, 1	; 24
+ 118:	32 e0       	ldi	r19, 0x02	; 2
+ 11a:	3a 95       	dec	r19
+ 11c:	f1 f7       	brne	.-4      	; 0x11a <_Z8LCD_Charh+0x12>
+ 11e:	00 c0       	rjmp	.+0      	; 0x120 <_Z8LCD_Charh+0x18>
+ 120:	c1 98       	cbi	0x18, 1	; 24
+ 122:	ef e8       	ldi	r30, 0x8F	; 143
+ 124:	f1 e0       	ldi	r31, 0x01	; 1
+ 126:	31 97       	sbiw	r30, 0x01	; 1
+ 128:	f1 f7       	brne	.-4      	; 0x126 <_Z8LCD_Charh+0x1e>
+ 12a:	00 c0       	rjmp	.+0      	; 0x12c <_Z8LCD_Charh+0x24>
+ 12c:	00 00       	nop
+ 12e:	28 b3       	in	r18, 0x18	; 24
+ 130:	2f 70       	andi	r18, 0x0F	; 15
+ 132:	f0 e1       	ldi	r31, 0x10	; 16
+ 134:	8f 9f       	mul	r24, r31
+ 136:	c0 01       	movw	r24, r0
+ 138:	11 24       	eor	r1, r1
+ 13a:	82 2b       	or	r24, r18
+ 13c:	88 bb       	out	0x18, r24	; 24
+ 13e:	c1 9a       	sbi	0x18, 1	; 24
+ 140:	32 e0       	ldi	r19, 0x02	; 2
+ 142:	3a 95       	dec	r19
+ 144:	f1 f7       	brne	.-4      	; 0x142 <_Z8LCD_Charh+0x3a>
+ 146:	00 c0       	rjmp	.+0      	; 0x148 <_Z8LCD_Charh+0x40>
+ 148:	c1 98       	cbi	0x18, 1	; 24
+ 14a:	8f e9       	ldi	r24, 0x9F	; 159
+ 14c:	9f e0       	ldi	r25, 0x0F	; 15
+ 14e:	01 97       	sbiw	r24, 0x01	; 1
+ 150:	f1 f7       	brne	.-4      	; 0x14e <_Z8LCD_Charh+0x46>
+ 152:	00 c0       	rjmp	.+0      	; 0x154 <_Z8LCD_Charh+0x4c>
+ 154:	00 00       	nop
+ 156:	08 95       	ret
+
+00000158 <_Z10LCD_StringPc>:
+ 158:	cf 93       	push	r28
+ 15a:	df 93       	push	r29
+ 15c:	ec 01       	movw	r28, r24
+ 15e:	88 81       	ld	r24, Y
+ 160:	88 23       	and	r24, r24
+ 162:	31 f0       	breq	.+12     	; 0x170 <_Z10LCD_StringPc+0x18>
+ 164:	21 96       	adiw	r28, 0x01	; 1
+ 166:	0e 94 84 00 	call	0x108	; 0x108 <_Z8LCD_Charh>
+ 16a:	89 91       	ld	r24, Y+
+ 16c:	81 11       	cpse	r24, r1
+ 16e:	fb cf       	rjmp	.-10     	; 0x166 <_Z10LCD_StringPc+0xe>
+ 170:	df 91       	pop	r29
+ 172:	cf 91       	pop	r28
+ 174:	08 95       	ret
+
+00000176 <_Z8ADC_Initv>:
+}
+
+void ADC_Init()
+{
+	DDRA=0x0;			/* Make ADC port as input */
+ 176:	1a ba       	out	0x1a, r1	; 26
+	ADCSRA = 0x87;			/* Enable ADC, fr/128  */
+ 178:	87 e8       	ldi	r24, 0x87	; 135
+ 17a:	86 b9       	out	0x06, r24	; 6
+	ADMUX = 0x40;			/* Vref: Avcc, ADC channel: 0 */
+ 17c:	80 e4       	ldi	r24, 0x40	; 64
+ 17e:	87 b9       	out	0x07, r24	; 7
+ 180:	08 95       	ret
+
+00000182 <_Z8ADC_Readc>:
+
+int ADC_Read(char channel)
+{
+	int Ain,AinLow;
+	
+	ADMUX=ADMUX|(channel & 0x0f);	/* Set input channel to read */
+ 182:	97 b1       	in	r25, 0x07	; 7
+ 184:	8f 70       	andi	r24, 0x0F	; 15
+ 186:	98 2b       	or	r25, r24
+ 188:	97 b9       	out	0x07, r25	; 7
+
+	ADCSRA |= (1<<ADSC);		/* Start conversion */
+ 18a:	36 9a       	sbi	0x06, 6	; 6
+	while((ADCSRA&(1<<ADIF))==0);	/* Monitor end of conversion interrupt */
+ 18c:	34 9b       	sbis	0x06, 4	; 6
+ 18e:	fe cf       	rjmp	.-4      	; 0x18c <_Z8ADC_Readc+0xa>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 190:	8a e1       	ldi	r24, 0x1A	; 26
+ 192:	8a 95       	dec	r24
+ 194:	f1 f7       	brne	.-4      	; 0x192 <_Z8ADC_Readc+0x10>
+ 196:	00 c0       	rjmp	.+0      	; 0x198 <_Z8ADC_Readc+0x16>
+	
+	_delay_us(10);
+	AinLow = (int)ADCL;		/* Read lower byte*/
+ 198:	24 b1       	in	r18, 0x04	; 4
+	Ain = (int)ADCH*256;		/* Read higher 2 bits and 
+ 19a:	85 b1       	in	r24, 0x05	; 5
+ 19c:	90 e0       	ldi	r25, 0x00	; 0
+ 19e:	98 2f       	mov	r25, r24
+ 1a0:	88 27       	eor	r24, r24
+					Multiply with weight */
+	Ain = Ain + AinLow;				
+	return(Ain);			/* Return digital value*/
+}
+ 1a2:	82 0f       	add	r24, r18
+ 1a4:	91 1d       	adc	r25, r1
+ 1a6:	08 95       	ret
+
+000001a8 <main>:
+
+
+int main(void)
+{
+ 1a8:	cf 93       	push	r28
+ 1aa:	df 93       	push	r29
+ 1ac:	00 d0       	rcall	.+0      	; 0x1ae <main+0x6>
+ 1ae:	00 d0       	rcall	.+0      	; 0x1b0 <main+0x8>
+ 1b0:	1f 92       	push	r1
+ 1b2:	cd b7       	in	r28, 0x3d	; 61
+ 1b4:	de b7       	in	r29, 0x3e	; 62
+   char String[5];
+   int value;
+
+   ADC_Init();			/*Goi ham khoi tao LCD*/
+ 1b6:	0e 94 bb 00 	call	0x176	; 0x176 <_Z8ADC_Initv>
+   LCD_Init();			/* Goi ham khoi tao LCD*/
+ 1ba:	0e 94 69 00 	call	0xd2	; 0xd2 <_Z8LCD_Initv>
+   LCD_String("GT ADC: ");	
+ 1be:	80 e6       	ldi	r24, 0x60	; 96
+ 1c0:	90 e0       	ldi	r25, 0x00	; 0
+ 1c2:	0e 94 ac 00 	call	0x158	; 0x158 <_Z10LCD_StringPc>
+
+   while(1)
+   {
+	   
+	   LCD_Command(0x87);		/* Vi tri hien thi*/
+ 1c6:	87 e8       	ldi	r24, 0x87	; 135
+ 1c8:	0e 94 41 00 	call	0x82	; 0x82 <_Z11LCD_Commandh>
+	   value=ADC_Read(0);		/* Doc gia tri ADC kenh 0 */
+ 1cc:	80 e0       	ldi	r24, 0x00	; 0
+ 1ce:	0e 94 c1 00 	call	0x182	; 0x182 <_Z8ADC_Readc>
+    } else if (__radix < 2 || __radix > 36) {
+	*__s = 0;
+	return __s;
+    } else {
+	extern char *__itoa_ncheck (int, char *, unsigned char);
+	return __itoa_ncheck (__val, __s, __radix);
+ 1d2:	4a e0       	ldi	r20, 0x0A	; 10
+ 1d4:	be 01       	movw	r22, r28
+ 1d6:	6f 5f       	subi	r22, 0xFF	; 255
+ 1d8:	7f 4f       	sbci	r23, 0xFF	; 255
+ 1da:	0e 94 f8 00 	call	0x1f0	; 0x1f0 <__itoa_ncheck>
+	   itoa(value,String,10);	/* chuyen doi kieu so nguyen sang dnag String */
+	   LCD_String(String);
+ 1de:	ce 01       	movw	r24, r28
+ 1e0:	01 96       	adiw	r24, 0x01	; 1
+ 1e2:	0e 94 ac 00 	call	0x158	; 0x158 <_Z10LCD_StringPc>
+	   LCD_String("  ");
+ 1e6:	89 e6       	ldi	r24, 0x69	; 105
+ 1e8:	90 e0       	ldi	r25, 0x00	; 0
+ 1ea:	0e 94 ac 00 	call	0x158	; 0x158 <_Z10LCD_StringPc>
+ 1ee:	eb cf       	rjmp	.-42     	; 0x1c6 <main+0x1e>
+
+000001f0 <__itoa_ncheck>:
+ 1f0:	bb 27       	eor	r27, r27
+ 1f2:	4a 30       	cpi	r20, 0x0A	; 10
+ 1f4:	31 f4       	brne	.+12     	; 0x202 <__itoa_ncheck+0x12>
+ 1f6:	99 23       	and	r25, r25
+ 1f8:	22 f4       	brpl	.+8      	; 0x202 <__itoa_ncheck+0x12>
+ 1fa:	bd e2       	ldi	r27, 0x2D	; 45
+ 1fc:	90 95       	com	r25
+ 1fe:	81 95       	neg	r24
+ 200:	9f 4f       	sbci	r25, 0xFF	; 255
+ 202:	0c 94 04 01 	jmp	0x208	; 0x208 <__utoa_common>
+
+00000206 <__utoa_ncheck>:
+ 206:	bb 27       	eor	r27, r27
+
+00000208 <__utoa_common>:
+ 208:	fb 01       	movw	r30, r22
+ 20a:	55 27       	eor	r21, r21
+ 20c:	aa 27       	eor	r26, r26
+ 20e:	88 0f       	add	r24, r24
+ 210:	99 1f       	adc	r25, r25
+ 212:	aa 1f       	adc	r26, r26
+ 214:	a4 17       	cp	r26, r20
+ 216:	10 f0       	brcs	.+4      	; 0x21c <__utoa_common+0x14>
+ 218:	a4 1b       	sub	r26, r20
+ 21a:	83 95       	inc	r24
+ 21c:	50 51       	subi	r21, 0x10	; 16
+ 21e:	b9 f7       	brne	.-18     	; 0x20e <__utoa_common+0x6>
+ 220:	a0 5d       	subi	r26, 0xD0	; 208
+ 222:	aa 33       	cpi	r26, 0x3A	; 58
+ 224:	08 f0       	brcs	.+2      	; 0x228 <__utoa_common+0x20>
+ 226:	a9 5d       	subi	r26, 0xD9	; 217
+ 228:	a1 93       	st	Z+, r26
+ 22a:	00 97       	sbiw	r24, 0x00	; 0
+ 22c:	79 f7       	brne	.-34     	; 0x20c <__utoa_common+0x4>
+ 22e:	b1 11       	cpse	r27, r1
+ 230:	b1 93       	st	Z+, r27
+ 232:	11 92       	st	Z+, r1
+ 234:	cb 01       	movw	r24, r22
+ 236:	0c 94 1d 01 	jmp	0x23a	; 0x23a <strrev>
+
+0000023a <strrev>:
+ 23a:	dc 01       	movw	r26, r24
+ 23c:	fc 01       	movw	r30, r24
+ 23e:	67 2f       	mov	r22, r23
+ 240:	71 91       	ld	r23, Z+
+ 242:	77 23       	and	r23, r23
+ 244:	e1 f7       	brne	.-8      	; 0x23e <strrev+0x4>
+ 246:	32 97       	sbiw	r30, 0x02	; 2
+ 248:	04 c0       	rjmp	.+8      	; 0x252 <strrev+0x18>
+ 24a:	7c 91       	ld	r23, X
+ 24c:	6d 93       	st	X+, r22
+ 24e:	70 83       	st	Z, r23
+ 250:	62 91       	ld	r22, -Z
+ 252:	ae 17       	cp	r26, r30
+ 254:	bf 07       	cpc	r27, r31
+ 256:	c8 f3       	brcs	.-14     	; 0x24a <strrev+0x10>
+ 258:	08 95       	ret
+
+0000025a <_exit>:
+ 25a:	f8 94       	cli
+
+0000025c <__stop_program>:
+ 25c:	ff cf       	rjmp	.-2      	; 0x25c <__stop_program>
